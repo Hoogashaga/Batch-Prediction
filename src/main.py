@@ -218,7 +218,7 @@ def display_progress(current, total, prefix="Processing", suffix="Complete", len
         print()
 
 async def process_questions_async(processor, questions):
-    """Process questions asynchronously and display results"""
+    """Process questions asynchronously and return results"""
     print("Processing questions in batch...")
     print("Note: Each question will have access to the answers of previous questions")
     
@@ -254,9 +254,7 @@ async def process_questions_async(processor, questions):
     
     print("Processing complete!")
     
-    # Display results using the new formatting function
-    print(format_results(results))
-    
+    # Return results without displaying them (main function will handle display)
     return results
 
 # Synchronous version as a wrapper
@@ -291,7 +289,7 @@ def display_qa_history(cache):
         print("-" * 80)
 
 async def process_interconnected_questions_async(processor, questions):
-    """Process interconnected questions asynchronously and display results"""
+    """Process interconnected questions asynchronously and return results"""
     print("Processing interconnected questions...")
     print("Note: Each question will have access to the answers of previous questions")
     
@@ -327,9 +325,7 @@ async def process_interconnected_questions_async(processor, questions):
     
     print("Processing complete!")
     
-    # Display results using the new formatting function
-    print(format_results(results))
-    
+    # Return results without displaying them (main function will handle display)
     return results
 
 # Synchronous version as a wrapper

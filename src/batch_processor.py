@@ -176,24 +176,7 @@ Question: {question}
         
         print("Processing complete!")
         
-        # Display results
-        print("\nProcessing Results:")
-        for i, result in enumerate(results):
-            print(f"\nQuestion {i+1}: {result['question']}")
-            if result['success']:
-                answer = result['answer']
-                # Check for the specific prefix (if you modified the prompt)
-                if answer.startswith("INFORMATION_NOT_FOUND:"):
-                    explanation = answer.replace("INFORMATION_NOT_FOUND:", "").strip()
-                    print(f"Answer: {explanation}")
-                else:
-                    print(f"Answer: {answer}")
-                            
-                if result.get('timestamps'):
-                    print(f"Relevant timestamps: {result['timestamps']}")
-            else:
-                print(f"Error: {result['error']}")
-        
+        # Return results without displaying them (main.py will handle display)
         return results
     
     async def _process_single_question_async(self, question: str) -> Dict[str, Any]:
@@ -203,10 +186,10 @@ Question: {question}
             async with self.rate_limiter:
                 # Create prompt
                 prompt = self._create_prompt(question)
-            
+                
                 # Call API
                 from google.genai import types
-            
+                
                 # Configure API call
                 config = types.GenerateContentConfig(
                     temperature=0.2,
