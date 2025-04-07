@@ -67,7 +67,7 @@ The asynchronous implementation is particularly useful when processing multiple 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/Batch-Prediction.git
+   git clone https://github.com/Hoogashaga/Batch-Prediction.git
    cd Batch-Prediction
    ```
 
