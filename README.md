@@ -91,6 +91,18 @@ The asynchronous implementation is particularly useful when processing multiple 
      ```
      GEMINI_API_KEY=your_api_key_here
      ```
+   - To create the `.env` file, you can use one of these methods:
+     ```
+     # On Windows (Command Prompt)
+     echo GEMINI_API_KEY=your_api_key_here > .env
+     
+     # On Windows (PowerShell)
+     Set-Content -Path .env -Value "GEMINI_API_KEY=your_api_key_here"
+     
+     # On macOS/Linux
+     echo "GEMINI_API_KEY=your_api_key_here" > .env
+     ```
+   - Alternatively, you can create the file using any text editor and save it as `.env` in the project root directory.
 
 ## Usage
 
