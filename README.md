@@ -73,7 +73,7 @@ The asynchronous implementation is particularly useful when processing multiple 
 
 2. Create and activate a virtual environment:
    ```
-   python -m venv venv
+   python3 -m venv venv
    # On Windows
    venv\Scripts\activate
    # On macOS/Linux
@@ -109,8 +109,10 @@ The asynchronous implementation is particularly useful when processing multiple 
 ### Running the Application
 
 ```
-python src/main.py
+python3 src/main.py
 ```
+
+> **Note for Windows users**: It's recommended to use Windows Command Prompt or Windows Terminal for better experience, especially for clickable timestamps in the output.
 
 ### Loading a YouTube Video
 
@@ -161,6 +163,8 @@ Relevant timestamps: ['00:01:30', '00:02:15']
 ### Timestamp Extraction
 - The application automatically extracts timestamps from answers
 - Timestamps are formatted as [HH:MM:SS] and can be used to navigate to specific parts of the video
+- On Windows Command Prompt or Windows Terminal, timestamps are clickable links
+- For macOS users: Plain URLs are provided in the output for easy copying and pasting into a browser
 
 ## Troubleshooting
 
@@ -181,6 +185,11 @@ Relevant timestamps: ['00:01:30', '00:02:15']
 4. **Caching Limitations**
    - If you see a message like "Content too small for caching", this is normal for shorter videos
    - For longer videos, ensure you have sufficient API quota for caching operations
+
+5. **Clickable Timestamps**
+   - On Windows Command Prompt or Windows Terminal, timestamps are clickable links
+   - On macOS Terminal, timestamps are not clickable, but plain URLs are provided in the output
+   - If you're using macOS, you can copy and paste the plain URLs into your browser
 
 ## License
 
