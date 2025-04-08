@@ -116,20 +116,20 @@ python3 src/main.py
 
 ### Loading a YouTube Video
 
-1. Select option 1 from the main menu to load a YouTube video
+1. Select **option 1** from the main menu to load a YouTube video
 2. Enter the YouTube URL when prompted
 3. The application will download and process the transcript
 
 ### Asking Questions
 
-1. Select option 2 from the main menu to ask questions
+1. Select **option 2** from the main menu to ask questions
 2. Enter your questions (one per line, press Enter twice to finish)
 3. The application will process your questions sequentially, with each question having access to the answers of previous questions
 4. The application will provide answers with relevant timestamps
 
 ### Batch Processing
 
-1. Select option 5 from the main menu to use default questions
+1. Select **option 5** from the main menu to use default questions
 2. The application will process all questions and save the results to `results.json`
 
 ## Example Questions and Expected Outputs
