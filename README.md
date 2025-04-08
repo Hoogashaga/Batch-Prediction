@@ -12,9 +12,6 @@ Batch-Prediction is a tool that allows users to:
 
 The application uses the Gemini API for natural language processing and provides a user-friendly interface for interacting with video content.
 
-## Demo
-
-A demo video showcasing the application's features is available in the `demo` directory.
 
 ## Components
 
