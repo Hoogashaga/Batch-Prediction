@@ -93,7 +93,7 @@ The asynchronous implementation is particularly useful when processing multiple 
      ```
    - To create the `.env` file, you can use one of these methods:
      ```
-     # On Windows (Command Prompt)
+     # On Windows (Command Prompt)[Recommanded]
      echo GEMINI_API_KEY=your_api_key_here > .env
      
      # On Windows (PowerShell)
@@ -163,8 +163,8 @@ Relevant timestamps: ['00:01:30', '00:02:15']
 ### Timestamp Extraction
 - The application automatically extracts timestamps from answers
 - Timestamps are formatted as [HH:MM:SS] and can be used to navigate to specific parts of the video
-- On Windows Command Prompt or Windows Terminal, timestamps are clickable links
-- For macOS users: Plain URLs are provided in the output for easy copying and pasting into a browser
+- On **Windows** Command Prompt or Windows Terminal, timestamps are **clickable** links
+- **For macOS users**: Plain URLs are provided in the output for easy copying and pasting into a browser
 
 ## Troubleshooting
 
