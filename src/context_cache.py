@@ -34,17 +34,27 @@ class ContextCache:
             try:
                 with open(self.transcript_cache_file, 'r', encoding='utf-8') as f:
                     self.transcript_cache = json.load(f)
+                print(f"Loaded transcript cache with {len(self.transcript_cache)} entries")
             except (json.JSONDecodeError, IOError) as e:
                 print(f"Loading transcript_cache_file error: {e}")
+                # If there's an error loading the cache, reset it to avoid further issues
+                self.transcript_cache = {}
+        else:
+            print(f"Transcript cache file does not exist: {self.transcript_cache_file}")
+            self.transcript_cache = {}
         
         if os.path.exists(self.qa_cache_file):
             try:
                 with open(self.qa_cache_file, 'r', encoding='utf-8') as f:
                     self.qa_cache = json.load(f)
+                print(f"Loaded QA cache with {len(self.qa_cache)} entries")
             except (json.JSONDecodeError, IOError) as e:
                 print(f"Loading qa_cache_file error: {e}")
                 # If there's an error loading the cache, reset it to avoid further issues
                 self.qa_cache = []
+        else:
+            print(f"QA cache file does not exist: {self.qa_cache_file}")
+            self.qa_cache = []
     
     def _save_cache(self):
         # Create a deep copy of the cache to avoid modifying the original
@@ -86,7 +96,18 @@ class ContextCache:
             print(f"Error occurred while saving QA to cache: {e}")
     
     def add_transcript_chunks(self, chunks: List[Dict[str, Any]]):
+        print(f"Adding {len(chunks)} transcript chunks to cache")
+        
+        if not chunks:
+            print("Warning: No chunks provided to add_transcript_chunks")
+            return
+        
         for i, chunk in enumerate(chunks):
+            # Validate chunk data
+            if 'start_time' not in chunk or 'end_time' not in chunk or 'text' not in chunk:
+                print(f"Warning: Chunk {i} is missing required fields, skipping")
+                continue
+                
             # Use timestamp as unique key 
             key = f"{chunk['start_time']}_{chunk['end_time']}"
             self.transcript_cache[key] = {
@@ -98,6 +119,7 @@ class ContextCache:
         
         # Save updated content in cache
         self._save_cache()
+        print(f"Successfully added {len(chunks)} transcript chunks to cache")
     
     # Store QA information
     def add_qa_pair(self, question: str, answer: str, related_timestamps: List[str] = None):

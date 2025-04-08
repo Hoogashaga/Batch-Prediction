@@ -573,16 +573,38 @@ async def main_async():
                 
                 if not os.path.exists(vtt_file):
                     print(f"Error: VTT file does not exist: {vtt_file}")
-                    continue
+                    # Try to find any VTT file
+                    vtt_files = [f for f in os.listdir(data_dir) if f.endswith('.vtt')]
+                    if vtt_files:
+                        vtt_file = os.path.join(data_dir, vtt_files[0])
+                        print(f"Using alternative VTT file: {vtt_file}")
+                    else:
+                        print("No VTT files found. Cannot proceed.")
+                        continue
                 
                 print(f"Parsing VTT file: {vtt_file}")
                 segments = parse_vtt(vtt_file)
+                
+                if not segments:
+                    print("Error: No segments parsed from VTT file. Cannot proceed.")
+                    continue
+                
                 chunks = chunk_transcript(segments, max_chunk_size=4000)
                 print(f"Parsed {len(segments)} segments, divided into {len(chunks)} chunks")
+                
+                if not chunks:
+                    print("Error: No chunks created from segments. Cannot proceed.")
+                    continue
                 
                 # Add transcript chunks to cache
                 cache.add_transcript_chunks(chunks)
                 print("Transcript added to cache")
+                
+                # Verify cache was updated
+                if not cache.transcript_cache:
+                    print("Warning: Transcript cache is still empty after adding chunks")
+                else:
+                    print(f"Transcript cache now contains {len(cache.transcript_cache)} entries")
                 
                 # Save video info
                 save_video_info(video_cache_dir, video_title, youtube_url)
