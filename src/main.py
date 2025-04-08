@@ -183,6 +183,13 @@ def format_results(results):
                 
                 # Add note about clickable timestamps
                 formatted_output += "\n\033[3mNote: Timestamps in blue are clickable links to jump to that point in the YouTube video.\033[0m\n"
+                
+                # Add a section with plain URLs for macOS users
+                formatted_output += "\n🔗 PLAIN URLS FOR MACOS USERS:\n"
+                for timestamp in result['timestamps']:
+                    youtube_url = timestamp_to_youtube_url(timestamp)
+                    formatted_output += f"  • {timestamp}: {youtube_url}\n"
+                formatted_output += "\n\033[3mNote: For macOS users, you can copy and paste these URLs into your browser.\033[0m\n"
         else:
             # Error block
             formatted_output += "❌ ERROR:\n"
@@ -463,6 +470,8 @@ async def main_async():
                         
                         # Initialize batch processor
                         processor = BatchProcessor(api_key=api_key, cache=cache)
+                        # Set video_id for clickable timestamps
+                        processor.video_id = extract_video_id(YOUTUBE_VIDEO_URL)
                         
                         # Create Google API cache for the transcript
                         print("Creating Google API cache for the transcript...")
@@ -533,6 +542,8 @@ async def main_async():
                     
                     # Initialize batch processor
                     processor = BatchProcessor(api_key=api_key, cache=cache)
+                    # Set video_id for clickable timestamps
+                    processor.video_id = video_id
                     
                     # Create Google API cache for the transcript
                     print("Creating Google API cache for the transcript...")
@@ -578,6 +589,8 @@ async def main_async():
                 
                 # Initialize batch processor
                 processor = BatchProcessor(api_key=api_key, cache=cache)
+                # Set video_id for clickable timestamps
+                processor.video_id = video_id
                 
                 # Create Google API cache for the transcript
                 print("Creating Google API cache for the transcript...")

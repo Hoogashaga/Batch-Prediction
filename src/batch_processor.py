@@ -241,6 +241,38 @@ Question: {question}
             # Match timestamps in format [HH:MM:SS] or [HH:MM:SS - HH:MM:SS]
             timestamps = re.findall(r'\[(\d{2}:\d{2}:\d{2}(?:\.\d{3})?(?:\s*-\s*\d{2}:\d{2}:\d{2}(?:\.\d{3})?)?)\]', answer)
             
+            # Convert timestamps to clickable YouTube links if video_id is available
+            if hasattr(self, 'video_id') and self.video_id:
+                # Function to convert timestamp to seconds
+                def timestamp_to_seconds(timestamp):
+                    parts = timestamp.split(':')
+                    if len(parts) == 3:
+                        hours, minutes, seconds = parts
+                        return int(hours) * 3600 + int(minutes) * 60 + int(float(seconds))
+                    elif len(parts) == 2:
+                        minutes, seconds = parts
+                        return int(minutes) * 60 + int(float(seconds))
+                    return 0
+                
+                # Replace timestamps with clickable links
+                for timestamp in timestamps:
+                    if '-' in timestamp:
+                        # Handle timestamp ranges
+                        start_time, end_time = timestamp.split('-')
+                        start_time = start_time.strip()
+                        end_time = end_time.strip()
+                        start_seconds = timestamp_to_seconds(start_time)
+                        end_seconds = timestamp_to_seconds(end_time)
+                        
+                        # Create clickable link for the start time
+                        link = f"https://youtu.be/{self.video_id}?t={start_seconds}"
+                        answer = answer.replace(f"[{timestamp}]", f"[{timestamp}]({link})")
+                    else:
+                        # Handle single timestamp
+                        seconds = timestamp_to_seconds(timestamp)
+                        link = f"https://youtu.be/{self.video_id}?t={seconds}"
+                        answer = answer.replace(f"[{timestamp}]", f"[{timestamp}]({link})")
+            
             # Check if the answer indicates no information was found
             no_info_phrases = [
                 "does not mention", 
@@ -527,6 +559,38 @@ Question: {question}
                 import re
                 # Match timestamps in format [HH:MM:SS] or [HH:MM:SS - HH:MM:SS]
                 timestamps = re.findall(r'\[(\d{2}:\d{2}:\d{2}(?:\.\d{3})?(?:\s*-\s*\d{2}:\d{2}:\d{2}(?:\.\d{3})?)?)\]', answer)
+                
+                # Convert timestamps to clickable YouTube links if video_id is available
+                if hasattr(self, 'video_id') and self.video_id:
+                    # Function to convert timestamp to seconds
+                    def timestamp_to_seconds(timestamp):
+                        parts = timestamp.split(':')
+                        if len(parts) == 3:
+                            hours, minutes, seconds = parts
+                            return int(hours) * 3600 + int(minutes) * 60 + int(float(seconds))
+                        elif len(parts) == 2:
+                            minutes, seconds = parts
+                            return int(minutes) * 60 + int(float(seconds))
+                        return 0
+                    
+                    # Replace timestamps with clickable links
+                    for timestamp in timestamps:
+                        if '-' in timestamp:
+                            # Handle timestamp ranges
+                            start_time, end_time = timestamp.split('-')
+                            start_time = start_time.strip()
+                            end_time = end_time.strip()
+                            start_seconds = timestamp_to_seconds(start_time)
+                            end_seconds = timestamp_to_seconds(end_time)
+                            
+                            # Create clickable link for the start time
+                            link = f"https://youtu.be/{self.video_id}?t={start_seconds}"
+                            answer = answer.replace(f"[{timestamp}]", f"[{timestamp}]({link})")
+                        else:
+                            # Handle single timestamp
+                            seconds = timestamp_to_seconds(timestamp)
+                            link = f"https://youtu.be/{self.video_id}?t={seconds}"
+                            answer = answer.replace(f"[{timestamp}]", f"[{timestamp}]({link})")
                 
                 # Check if the answer indicates no information was found
                 no_info_phrases = [
